@@ -112,10 +112,28 @@ global.DOMParser = new JSDOM().window.DOMParser;
 
 
 
-    /* CYCLIC.sh stuff */
+/* CYCLIC.sh stuff */
+
+const app = express();
+
+const discord_api = axios.create({
+  baseURL: 'https://discord.com/api/',
+  timeout: 3000,
+  headers: {
+	"Access-Control-Allow-Origin": "*",
+	"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+	"Access-Control-Allow-Headers": "Authorization",
+	"Authorization": `Bot ${TOKEN}`
+  }
+});
+
+
 var http = require('http');
 http.createServer(function (req, res) {
     console.log(`Just got a request at ${req.url}!`)
     res.write('Yo!');
     res.end();
 }).listen(process.env.PORT || 3000);
+
+
+app.listen(8999, () => {})
