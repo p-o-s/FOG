@@ -117,6 +117,7 @@ global.DOMParser = new JSDOM().window.DOMParser;
 
 const axios = require('axios')
 const express = require('express');
+const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-interactions');
 
 const app = express();
 
@@ -176,7 +177,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
 
 
-app.get('/register_commands', async (req,res) =>{
+app.get('/  ', async (req,res) =>{
   let slash_commands = [
     {
       "name": "yo",
