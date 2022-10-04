@@ -114,6 +114,10 @@ global.DOMParser = new JSDOM().window.DOMParser;
 
 /* CYCLIC.sh stuff */
 
+
+const axios = require('axios')
+const express = require('express');
+
 const app = express();
 
 const discord_api = axios.create({
