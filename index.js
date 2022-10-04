@@ -33,7 +33,7 @@ function rollArr(arr) {
   return arr[Math.floor(Math.random() * arr.length )]
 }
 
-/* wich game */
+/* wich game */ 
 const games = ["tarkov", "DAYZ", "hunt:showdown"];
 
 client.on("messageCreate", msg => {
