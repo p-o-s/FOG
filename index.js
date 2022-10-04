@@ -109,3 +109,13 @@ global.DOMParser = new JSDOM().window.DOMParser;
             .catch(function (err) { console.warn('ERR', err); });
         }
     });
+
+
+
+    /* CYCLIC.sh stuff */
+var http = require('http');
+http.createServer(function (req, res) {
+    console.log(`Just got a request at ${req.url}!`)
+    res.write('Yo!');
+    res.end();
+}).listen(process.env.PORT || 3000);
