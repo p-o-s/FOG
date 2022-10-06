@@ -24,7 +24,7 @@ const discord_api = axios.create({
   }
 });
 
-const useful = {
+const settings = {
   "maps": ["Labs", "Customs", "Shoreline", "Factory", "Lighthouse", "Interchange", "Reserve", "Woods"],
   "games": ["tarkov", "DAYZ", "hunt:showdown", "battlebit"]
 }
@@ -46,15 +46,12 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
       let map = "";
 
-      console.log("interaction data options name: ", interaction.data.options[0].name);
-
-
       if(interaction.data.options[0].name == "includelabs") {
-        map = rollArr(tarkovMaps);
+        map = rollArr(settings.maps);
       }
       
       if(interaction.data.options[0].name == "excludelabs") {
-        map = rollArr(tarkovMaps.slice(1));
+        map = rollArr(settings.maps.slice(1));
       }
 
       return res.send({
