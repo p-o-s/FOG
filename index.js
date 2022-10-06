@@ -46,6 +46,9 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
       let map = "";
 
+      console.log("interaction data options name: ", interaction.data.options.name);
+
+
       if(interaction.data.options.name == "includelabs") {
         map = rollArr(tarkovMaps);
       }
