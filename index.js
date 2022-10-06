@@ -1,11 +1,12 @@
+require('dotenv').config() // load secrets
 
-// const { clientId, guildId, token, publicKey } = require('./config.json');
-require('dotenv').config()
+// discord API keys/id's
 const APPLICATION_ID = process.env.APPLICATION_ID 
 const TOKEN = process.env.TOKEN 
 const PUBLIC_KEY = process.env.PUBLIC_KEY || 'not set'
 const GUILD_ID = process.env.GUILD_ID 
 
+// axios / express / discord interactions
 const axios = require('axios')
 const express = require('express');
 const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-interactions');
@@ -23,13 +24,25 @@ const discord_api = axios.create({
   }
 });
 
+const useful = {
+  "maps": ["Labs", "Customs", "Shoreline", "Factory", "Lighthouse", "Interchange", "Reserve", "Woods"],
+  "games": ["tarkov", "DAYZ", "hunt:showdown", "battlebit"]
+}
 
+// utility
+function rollArr(arr) {
+  return arr[Math.floor(Math.random() * arr.length )]
+}
+
+// receive interactions
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   const interaction = req.body;
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     console.log(interaction.data.name)
-    if(interaction.data.name == 'yo'){
+
+    // Random map generator
+    if(interaction.data.name == 'map'){
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
@@ -37,8 +50,9 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         },
       });
     }
-
-    if(interaction.data.name == 'dm'){
+    
+    // Random game generator
+    if(interaction.data.name == 'game'){
       // https://discord.com/developers/docs/resources/user#create-dm
       let c = (await discord_api.post(`/users/@me/channels`,{
         recipient_id: interaction.member.user.id
@@ -66,16 +80,49 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 });
 
 
+app.get('/delete', async (req,res) =>{
+  try
+  {
+    // api docs - https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
+    let discord_response = await discord_api.delete([`/applications/{APPLICATION_ID}/guilds/{GUILD_ID}/commands/1026940698156597259`, 
+                                                     `/applications/{APPLICATION_ID}/guilds/{GUILD_ID}/commands/1026940698156597258`])
+    console.log(discord_response.data)
+    return res.send('commands have been deleted')
+  }catch(e){
+    console.error(e.code)
+    console.error(e.response?.data)
+    return res.send(`${e.code} error from discord`)
+  }
+})
+
+// register interaction commands "/?"
 app.get('/register_commands', async (req,res) =>{
   let slash_commands = [
     {
-      "name": "yo",
-      "description": "replies with Yo!",
+      "name": "map",
+      "description": "Random map generator",
+      "type": 2,
+      "options": [
+        {
+          "name": "includeLabs",
+          "description": "include Labs",
+          "type": 1 // 1 is type SUB_COMMAND
+        },
+        {
+            "name": "excludeLabs",
+            "description": "exclude Labs",
+            "type": 1
+        }
+      ]
+    },
+    {
+      "name": "game",
+      "description": "Random game generator",
       "options": []
     },
     {
-      "name": "dm",
-      "description": "sends user a DM",
+      "name": "scav|pmc",
+      "description": "Fun or burden?",
       "options": []
     }
   ]
