@@ -84,7 +84,7 @@ app.get('/delete', async (req,res) =>{
   try
   {
     // api docs - https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
-    let discord_response = await discord_api.put([`DELETE/applications/{APPLICATION_ID}/guilds/{GUILD_ID}/commands/1026940698156597259`, `DELETE/applications/{APPLICATION_ID}/guilds/{GUILD_ID}/commands/1026940698156597258`])
+    let discord_response = await discord_api.put([`DELETE/applications/${APPLICATION_ID}/guilds/${GUILD_ID}/commands/1026940698156597259`, `DELETE/applications/${APPLICATION_ID}/guilds/${GUILD_ID}/commands/1026940698156597258`])
     console.log(discord_response.data)
     return res.send('commands have been deleted')
   }catch(e){
