@@ -46,14 +46,14 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
       let map = "";
 
-      console.log("interaction data options name: ", interaction.data.options.name);
+      console.log("interaction data options name: ", interaction.data.options[0].name);
 
 
-      if(interaction.data.options.name == "includelabs") {
+      if(interaction.data.options[0].name == "includelabs") {
         map = rollArr(tarkovMaps);
       }
       
-      if(interaction.data.options.name == "excludelabs") {
+      if(interaction.data.options[0].name == "excludelabs") {
         map = rollArr(tarkovMaps.slice(1));
       }
 
