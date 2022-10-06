@@ -88,14 +88,14 @@ app.get('/register_commands', async (req,res) =>{
       "description": "Random map generator",
       "options": [
         {
-          "name": "includeLabs",
+          "name": "includelabs",
           "description": "include Labs",
-          "type": 2
+          "type": 1
         },
         {
-          "name": "excludeLabs",
+          "name": "excludelabs",
           "description": "exclude Labs",
-          "type": 2
+          "type": 1
         }
       ]
     },
@@ -107,7 +107,7 @@ app.get('/register_commands', async (req,res) =>{
     },
 
     {
-      "name": "scav|pmc",
+      "name": "scavorpmc",
       "description": "Fun or burden?",
       "options": []
     }
