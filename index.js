@@ -64,27 +64,12 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     
     // Random game generator
     if(interaction.data.name == 'game'){
-      // https://discord.com/developers/docs/resources/user#create-dm
-      let c = (await discord_api.post(`/users/@me/channels`,{
-        recipient_id: interaction.member.user.id
-      })).data
-      try{
-        // https://discord.com/developers/docs/resources/channel#create-message
-        let res = await discord_api.post(`/channels/${c.id}/messages`,{
-          content:'Yo! I got your slash command. I am not able to respond to DMs just slash commands.',
-        })
-        console.log(res.data)
-      }catch(e){
-        console.log(e)
-      }
 
-      return res.send({
-        // https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data:{
-          content:'👍'
-        }
-      });
+    }
+
+    // Random game generator
+    if(interaction.data.name == 'scavorpmc'){
+
     }
   }
 
@@ -96,16 +81,15 @@ app.get('/register_commands', async (req,res) =>{
   let slash_commands = [
     {
       "name": "map",
-      "description": "Random map generator",
       "options": [
         {
           "name": "includelabs",
-          "description": "include Labs",
+          "description": "Random map generator. Include Labs.",
           "type": 1
         },
         {
           "name": "excludelabs",
-          "description": "exclude Labs",
+          "description": "Random map generator. Exclude Labs.",
           "type": 1
         }
       ]
