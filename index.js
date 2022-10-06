@@ -33,11 +33,11 @@ const discord_api = axios.create({
 //   }
 // })
 
-axios({
-  url: 'https://api.tarkov.dev/graphql',
-  method: 'post',
-  data: {
-    query: `{
+
+import { request, gql } from 'graphql-request'
+
+const query = gql`
+{
 	items(type: gun) {
 		properties {
     __typename
@@ -50,13 +50,10 @@ axios({
       }
     }
   }
-}`
-  }
-}).then((res) => {
-  console.log(res.data)
-}).catch(function (error) {
-  console.log(error);
-}); 
+}
+`
+
+request('https://api.tarkov.dev/graphql', query).then((data) => console.log(data))
 
 
 const settings = {
