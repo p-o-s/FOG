@@ -80,20 +80,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 });
 
 
-app.get('/delete', async (req,res) =>{
-  try
-  {
-    // api docs - https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
-    let discord_response = await discord_api.delete(`/applications/${APPLICATION_ID}/guilds/${GUILD_ID}/commands/1026940698156597258`)
-    console.log(discord_response.data)
-    return res.send('commands have been deleted')
-  }catch(e){
-    console.error(e.code)
-    console.error(e.response?.data)
-    return res.send(`${e.code} error from discord`)
-  }
-})
-
 // register interaction commands "/?"
 app.get('/register_commands', async (req,res) =>{
   let slash_commands = [
