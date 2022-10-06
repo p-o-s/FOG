@@ -90,20 +90,24 @@ app.get('/register_commands', async (req,res) =>{
         {
           "name": "includeLabs",
           "description": "include Labs",
-          "type": 1
+          "type": 1,
+          "options": []
         },
         {
           "name": "excludeLabs",
           "description": "exclude Labs",
-          "type": 1
+          "type": 1,
+          "options": []
         }
       ]
     },
+
     {
       "name": "game",
       "description": "Random game generator",
       "options": []
     },
+
     {
       "name": "scav|pmc",
       "description": "Fun or burden?",
