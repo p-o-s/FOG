@@ -26,7 +26,7 @@ const discord_api = axios.create({
 
 
 // const tarkovDev = axios.create({
-//   baseURL: '',
+//   baseURL: 'https://api.tarkov.dev/graphql',
 //   timeout: 3000,
 //   headers: {
 
