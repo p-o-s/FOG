@@ -36,6 +36,8 @@ const discord_api = axios.create({
 
 const { request, gql } = require('graphql-request')
 
+async function main() {
+  
 const query = gql`
 {
 	items(type: gun) {
@@ -53,7 +55,11 @@ const query = gql`
 }
 `
 
-request('https://api.tarkov.dev/graphql', query).then((data) => console.log(data)).catch(function (error) {console.log(error);}); 
+const data = await request('https://api.tarkov.dev/graphql', query)
+console.log(JSON.stringify(data, undefined, 2))
+}
+
+main().catch((error) => console.error(error))
 
 
 
