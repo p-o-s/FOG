@@ -25,6 +25,8 @@ const discord_api = axios.create({
 });
 
 
+
+// TARKOV DEV
 const tarkovDev = axios.create({
   baseURL: 'https://api.tarkov.dev/graphql',
   timeout: 3000,
@@ -40,7 +42,7 @@ app.get('/tarkov', async (req,res) =>{
 
   try
   {
-    let tarkovDevResponse = await tarkovDev.post(query)
+    let tarkovDevResponse = await tarkovDev.put(query)
     return res.send(tarkovDevResponse.data)
   }catch(e){
     console.error(e.code)
@@ -49,7 +51,7 @@ app.get('/tarkov', async (req,res) =>{
   }
 })
 
-
+// MAIN
 const settings = {
   'maps': ['Labs', 'Customs', 'Shoreline', 'Factory', 'Lighthouse', 'Interchange', 'Reserve', 'Woods'],
   'games': ['tarkov', 'DAYZ', 'hunt:showdown', 'battlebit']
@@ -159,7 +161,7 @@ app.listen(8999, () => {})
 
 // # TODO https://github.com/x0rtex/TarkovLoadoutLottery
 // tarkov.dev API graphql
-
+// https://github.cdnweb.icu/topics/escape-from-tarkov
 
 
 
