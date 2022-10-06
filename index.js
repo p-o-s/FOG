@@ -43,10 +43,21 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     // Random map generator
     if(interaction.data.name == 'map'){
+
+      let map = "";
+
+      if(interaction.data.options.name == "includelabs") {
+        map = rollArr(tarkovMaps);
+      }
+      
+      if(interaction.data.options.name == "excludelabs") {
+        map = rollArr(tarkovMaps.slice(1));
+      }
+
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `Yo ${interaction.member.user.username}!`,
+          content: `Have fun on ${map}!`,
         },
       });
     }
@@ -180,10 +191,10 @@ async function waitForAnswer(incomingMsg) {
   let promise = new Promise((resolve) => { 
     client.on("messageCreate", msg => {
       if(incomingMsg.author.username === msg.author.username & msg.content === "yes") {
-        resolve("Have fun on " + rollArr(tarkovMaps))
+        resolve("Have fun on " + )
       }
       if(incomingMsg.author.username === msg.author.username & msg.content === "no") {
-        resolve("I hope you're not lying to me. Go play on " + rollArr(tarkovMaps.slice(1)))
+        resolve("I hope you're not lying to me. Go play on " + )
       }
     }) 
   });
