@@ -53,7 +53,8 @@ const query = gql`
 }
 `
 
-request('https://api.tarkov.dev/graphql', query).then((data) => console.log(data))
+request('https://api.tarkov.dev/graphql', query).then((data) => console.log(data)).catch(function (error) {console.log(error);}); 
+
 
 
 const settings = {
