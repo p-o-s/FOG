@@ -17,55 +17,56 @@ const discord_api = axios.create({
   baseURL: 'https://discord.com/api/',
   timeout: 3000,
   headers: {
-	"Access-Control-Allow-Origin": "*",
-	"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-	"Access-Control-Allow-Headers": "Authorization",
-	"Authorization": `Bot ${TOKEN}`
+	'Access-Control-Allow-Origin': '*',
+	'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+	'Access-Control-Allow-Headers': 'Authorization',
+	'Authorization': `Bot ${TOKEN}`
   }
 });
 
 
-// const tarkovDev = axios.create({
-//   baseURL: 'https://api.tarkov.dev/graphql',
-//   timeout: 3000,
-//   headers: {
+const tarkovDev = axios.create({
+  baseURL: 'https://api.tarkov.dev/graphql',
+  timeout: 3000,
+  headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+  }
+})
 
-//   }
-// })
+app.get('/tarkov', async (req,res) =>{
 
-
-const { request, gql } = require('graphql-request')
-
-async function main() {
-  
-const query = gql`
-{
-	items(type: gun) {
-		properties {
-    __typename
-    ... on ItemPropertiesWeapon {
-        defaultPreset {
-          name
-          shortName
-          inspectImageLink
+  let query = JSON.stringify({query: `{
+    items(type: gun) {
+      properties {
+      __typename
+      ... on ItemPropertiesWeapon {
+          defaultPreset {
+            name
+            shortName
+            inspectImageLink
+          }
         }
       }
     }
   }
-}
-`
+  `})
 
-const data = await request('https://api.tarkov.dev/graphql', query)
-console.log(JSON.stringify(data, undefined, 2))
-}
-
-main().catch((error) => console.error(error))
-
+  try
+  {
+    let tarkovDevResponse = await tarkovDev.put(query)
+    return res.send(tarkovDevResponse.data)
+  }catch(e){
+    console.error(e.code)
+    console.error(e.response?.data)
+    return res.send(`${e.code} from tarkov.dev`)
+  }
+})
 
 
 const settings = {
-  "maps": ["Labs", "Customs", "Shoreline", "Factory", "Lighthouse", "Interchange", "Reserve", "Woods"],
-  "games": ["tarkov", "DAYZ", "hunt:showdown", "battlebit"]
+  'maps': ['Labs', 'Customs', 'Shoreline', 'Factory', 'Lighthouse', 'Interchange', 'Reserve', 'Woods'],
+  'games': ['tarkov', 'DAYZ', 'hunt:showdown', 'battlebit']
 }
 
 // utility
@@ -83,13 +84,13 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // Random map generator
     if(interaction.data.name == 'map'){
 
-      let map = "";
+      let map = '';
 
-      if(interaction.data.options[0].name == "includelabs") {
+      if(interaction.data.options[0].name == 'includelabs') {
         map = rollArr(settings.maps);
       }
       
-      if(interaction.data.options[0].name == "excludelabs") {
+      if(interaction.data.options[0].name == 'excludelabs') {
         map = rollArr(settings.maps.slice(1));
       }
 
@@ -119,32 +120,32 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 app.get('/register_commands', async (req,res) =>{
   let slash_commands = [
     {
-      "name": "map",
-      "description": "Random map generator.",
-      "options": [
+      'name': 'map',
+      'description': 'Random map generator.',
+      'options': [
         {
-          "name": "includelabs",
-          "description": "Random map generator. Include Labs.",
-          "type": 1
+          'name': 'includelabs',
+          'description': 'Random map generator. Include Labs.',
+          'type': 1
         },
         {
-          "name": "excludelabs",
-          "description": "Random map generator. Exclude Labs.",
-          "type": 1
+          'name': 'excludelabs',
+          'description': 'Random map generator. Exclude Labs.',
+          'type': 1
         }
       ]
     },
 
     {
-      "name": "game",
-      "description": "Random game generator",
-      "options": []
+      'name': 'game',
+      'description': 'Random game generator',
+      'options': []
     },
 
     {
-      "name": "scavorpmc",
-      "description": "Fun or burden?",
-      "options": []
+      'name': 'scavorpmc',
+      'description': 'Fun or burden?',
+      'options': []
     }
   ]
   try
