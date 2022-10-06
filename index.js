@@ -81,6 +81,7 @@ app.get('/register_commands', async (req,res) =>{
   let slash_commands = [
     {
       "name": "map",
+      "description": "Random map generator.",
       "options": [
         {
           "name": "includelabs",
