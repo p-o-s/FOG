@@ -34,7 +34,7 @@ const discord_api = axios.create({
 // })
 
 
-import { request, gql } from 'graphql-request'
+const { request, gql } = require('graphql-request')
 
 const query = gql`
 {
