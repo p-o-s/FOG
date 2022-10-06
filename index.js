@@ -24,6 +24,39 @@ const discord_api = axios.create({
   }
 });
 
+
+// const tarkovDev = axios.create({
+//   baseURL: '',
+//   timeout: 3000,
+//   headers: {
+
+//   }
+// })
+
+axios({
+  url: 'https://api.tarkov.dev/graphql',
+  method: 'post',
+  data: {
+    query: `{
+	items(type: gun) {
+		properties {
+    __typename
+    ... on ItemPropertiesWeapon {
+        defaultPreset {
+          name
+          shortName
+          inspectImageLink
+        }
+      }
+    }
+  }
+}`
+  }
+}).then((res) => {
+  console.log(res.data)
+}); 
+
+
 const settings = {
   "maps": ["Labs", "Customs", "Shoreline", "Factory", "Lighthouse", "Interchange", "Reserve", "Woods"],
   "games": ["tarkov", "DAYZ", "hunt:showdown", "battlebit"]
@@ -129,6 +162,12 @@ app.get('/', async (req,res) =>{
 })
 
 app.listen(8999, () => {})
+
+
+// # TODO https://github.com/x0rtex/TarkovLoadoutLottery
+// tarkov.dev API graphql
+
+
 
 
 /*
