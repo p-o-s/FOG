@@ -106,7 +106,7 @@ app.get('/register_commands', async (req,res) =>{
       "options": []
     },
     {
-      "name": "scav|pmc",
+      "name": "scavORpmc",
       "description": "Fun or burden?",
       "options": []
     }
