@@ -90,14 +90,12 @@ app.get('/register_commands', async (req,res) =>{
         {
           "name": "includeLabs",
           "description": "include Labs",
-          "type": 1,
-          "options": []
+          "type": 2
         },
         {
           "name": "excludeLabs",
           "description": "exclude Labs",
-          "type": 1,
-          "options": []
+          "type": 2
         }
       ]
     },
