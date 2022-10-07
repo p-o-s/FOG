@@ -218,7 +218,20 @@ app.get('/register_commands', async (req,res) =>{
     {
       'name': 'roulette',
       'description': 'don\'t do it!',
-      'options': []
+      'options': [
+        {
+          'name': 'helmets',
+          'description': 'Helmet level 1 to 6',
+          'type': 3,
+          'required': true
+        },
+        {
+          'name': 'armor',
+          'description': 'Armor level 1 to 6',
+          'type': 3,
+          'required': true
+        }
+      ]
     }
   ]
   try
