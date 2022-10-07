@@ -76,7 +76,6 @@ function rollArr(arr) {
 
 // receive interactions
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
-  console.log("TESTTESTSTEWFESDFESFESFESFESFESEF", req.body);
   const interaction = req.body;
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
@@ -115,22 +114,22 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     // roulette
     if(interaction.data.name == 'roulette'){
-
-    await res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: '',
-          embeds: [
-            {
-              "type": "rich",
-              "title": `Your Roll`,
-              "description": `... needs some time. Calculating... `,
-              "color": 0x00FFFF,
-              "fields": [],
-            }
-          ]
-        }
-      });
+    let waitEmbed = {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: '',
+        embeds: [
+          {
+            "type": "rich",
+            "title": `Your Roll`,
+            "description": `... needs some time. Calculating... `,
+            "color": 0x00FFFF,
+            "fields": [],
+          }
+        ]
+      }
+    }
+    await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, waitEmbed)
 
       let query = { 
         "operationName": "",
