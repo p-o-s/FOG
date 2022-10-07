@@ -130,7 +130,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       const armorArr = ['naked'];
       const headphones = ['yes', 'no']; // wenn class 2/5/6 dann keine headphones
       
-      let test = helmetArr.push(lvlArr.filter(({lvl}) => lvl.match(`\\[${helmetArg}]\g`)))
+      let test = helmetArr.push(    lvlArr.filter((lvl) => { return lvl.match(`\\[${helmetArg}]\g`) })   )
       console.log("filtered helmet arr: ", test )
 
     
