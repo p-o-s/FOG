@@ -115,8 +115,8 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       }
       
       
-      let helmetArg = interaction.data.options[0];
-      let armorArg = interaction.data.options[1];
+      let helmetArg = interaction.data.options[0].value;
+      let armorArg = interaction.data.options[1].value;
 
       const lvlArr = ['1','2','3','4','5','6'];
       const helmetArr = ['naked', 'cosmetic'];
