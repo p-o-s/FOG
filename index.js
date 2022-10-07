@@ -46,9 +46,10 @@ app.get('/tarkov', async (req,res) =>{
   try
   {
     let tarkovDevResponse = await tarkovDev.post('/graphql', query)
-    let weapons = tarkovDevResponse.data.data.items
+    let items = tarkovDevResponse.data.data.items
+    let randomItemName = items[items.length * Math.random() | 0].properties.defaultPreset.shortName.replace(/\sStandard|\sDefault/g, '')
 
-    return res.send(weapons.toString())
+    return res.send(randomItemName)
   }catch(e){
     console.error(e)
     console.error(e.code)
