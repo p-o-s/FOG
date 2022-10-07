@@ -237,19 +237,17 @@ app.get('/register_commands', async (req,res) =>{
       'options': [
         {
           'name': 'helmets',
-          'description': 'Helmet level 1 to 6',
+          'description': 'Helmet level 1-6',
           'type': 3,
-          'required': true,
-          'default': '1-5'
+          'required': false
         },
         {
           'name': 'armor',
-          'description': 'Armor level 1 to 6',
+          'description': 'Armor level 1-6',
           'type': 3,
-          'required': true,
-          'default': '1-4'
+          'required': false
         }
-      ]
+      ] 
     }
   ]
   try
