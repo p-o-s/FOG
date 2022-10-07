@@ -80,6 +80,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     console.log(interaction.data)
+    console.log("RES: ", res)
 
     // Random map generator
     if(interaction.data.name == 'map'){
