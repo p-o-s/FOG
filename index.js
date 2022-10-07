@@ -114,22 +114,31 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     // roulette
     if(interaction.data.name == 'roulette'){
-    let waitEmbed = {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: '',
-        embeds: [
-          {
-            "type": "rich",
-            "title": `Your Roll`,
-            "description": `... needs some time. Calculating... `,
-            "color": 0x00FFFF,
-            "fields": [],
+
+      try
+      {
+        let waitEmbed = {
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: '',
+            embeds: [
+              {
+                "type": "rich",
+                "title": `Your Roll`,
+                "description": `... needs some time. Calculating... `,
+                "color": 0x00FFFF,
+                "fields": [],
+              }
+            ]
           }
-        ]
+        }
+        return await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, waitEmbed)
+      }catch(e){
+        console.error(e)
+        console.error(e.code)
+        console.error(e.response?.data)
+        return res.send(`${e.code} from tarkov.dev`)
       }
-    }
-    await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, waitEmbed)
 
       let query = { 
         "operationName": "",
