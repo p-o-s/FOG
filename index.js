@@ -76,10 +76,11 @@ function rollArr(arr) {
 
 // receive interactions
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
+  console.log(req.body);
   const interaction = req.body;
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
-    console.log(interaction);
+    
 
     // Random map generator
     if(interaction.data.name == 'map'){
@@ -115,7 +116,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // roulette
     if(interaction.data.name == 'roulette'){
 
-      let reply = await res.send({
+    await res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: '',
@@ -130,7 +131,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           ]
         }
       });
-      console.log(reply);
 
       let query = { 
         "operationName": "",
@@ -174,9 +174,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         
 
         let rouletteEmbed = {
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: '',
             embeds: [
               {
                 "type": "rich",
