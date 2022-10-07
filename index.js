@@ -171,7 +171,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                   },
                   {
                     "name": `Headphones`,
-                    "value": `${headphones}`,
+                    "value": `${headphones()}`,
                     "inline": true
                   }
                 ],
