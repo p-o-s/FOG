@@ -125,7 +125,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       let helmetArg = interaction.data.options[0];
       let armorArg = interaction.data.options[1];
 
-      const lvlArr = [1,2,3,4,5,6];
+      const lvlArr = ['1','2','3','4','5','6'];
       const helmetArr = ['naked', 'cosmetic'];
       const armorArr = ['naked'];
       const headphones = ['yes', 'no']; // wenn class 2/5/6 dann keine headphones
