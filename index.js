@@ -111,6 +111,71 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     if(interaction.data.name == 'scavorpmc'){
 
     }
+
+    // roulette
+    if(interaction.data.name == 'roulette'){
+
+      let query = { 
+        "operationName": "",
+        "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName inspectImageLink }}}} }`,
+        "variables": {}
+      }
+    
+      try
+      {
+        // send graphQl query to tarkov.dev
+        let tarkovDevResponse = await tarkovDev.post('/graphql', query)
+        let items = tarkovDevResponse.data.data.items
+    
+        // exclude items without defaultPreset
+        let itemsFiltered = items.filter((item) => { return item.properties.defaultPreset != null })
+        
+        let randomItemName = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset.shortName.replace(/\sStandard|\sDefault/g, '')
+        
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: '',
+            embeds: [
+              {
+                "type": "rich",
+                "title": `Your Roll`,
+                "description": `use it or get recked!`,
+                "color": 0x00FFFF,
+                "fields": [
+                  {
+                    "name": `Weapon`,
+                    "value": `${randomItemName}`,
+                    "inline": true
+                  },
+                  {
+                    "name": `Armor`,
+                    "value": `\${}`,
+                    "inline": true
+                  },
+                  {
+                    "name": `Helmet`,
+                    "value": `\${}`,
+                    "inline": true
+                  },
+                  {
+                    "name": `Headphones`,
+                    "value": `\${}`,
+                    "inline": true
+                  }
+                ]
+              }
+            ]
+          },
+        });
+      }catch(e){
+        console.error(e)
+        console.error(e.code)
+        console.error(e.response?.data)
+        return res.send(`${e.code} from tarkov.dev`)
+      }
+    }
+
   }
 
 });
@@ -135,16 +200,19 @@ app.get('/register_commands', async (req,res) =>{
         }
       ]
     },
-
     {
       'name': 'game',
       'description': 'Random game generator',
       'options': []
     },
-
     {
       'name': 'scavorpmc',
       'description': 'Fun or burden?',
+      'options': []
+    },
+    {
+      'name': 'roulette',
+      'description': 'don\'t do it!',
       'options': []
     }
   ]
