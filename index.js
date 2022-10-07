@@ -128,12 +128,23 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       const lvlArr = ['1','2','3','4','5','6'];
       const helmetArr = ['naked', 'cosmetic'];
       const armorArr = ['naked'];
-      const headphones = ['yes', 'no']; // wenn class 2/5/6 dann keine headphones
       
-      let test = helmetArr.push(    lvlArr.filter((lvl) => { return lvl.match(`\\[${helmetArg}]\g`) })   )
-      console.log("filtered helmet arr: ", test )
+      let availableHelmets = helmetArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${helmetArg}]`, 'g')) }))
+      let availableArmor = armorArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${armorArg}]`, 'g')) }))
 
-    
+      let randomHelmet = availableHelmets[availableHelmets.length * Math.random() | 0]
+      let randomArmor = availableArmor[availableArmor.length * Math.random() | 0]
+
+      let headphones = () => {
+        if(randomHelmet == '2' || randomHelmet == '5' || randomHelmet == '6') {
+          return 'blocked by headgear'
+        } else {
+          let yesno = ['yes', 'no']
+          return yesno[yesno.length * Math.random() | 0]
+        }
+      }
+
+      
       try
       {
         // send graphQl query to tarkov.dev
@@ -163,17 +174,17 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                   },
                   {
                     "name": `Armor`,
-                    "value": `\${}`,
+                    "value": `Lvl: ${randomArmor}`,
                     "inline": true
                   },
                   {
                     "name": `Helmet`,
-                    "value": `\${}`,
+                    "value": `Lvl: ${randomHelmet}`,
                     "inline": true
                   },
                   {
                     "name": `Headphones`,
-                    "value": `\${}`,
+                    "value": `${headphones}`,
                     "inline": true
                   }
                 ],
