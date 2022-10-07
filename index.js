@@ -125,7 +125,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       let randomHelmet = availableHelmets[availableHelmets.length * Math.random() | 0]
       let randomArmor = availableArmor[availableArmor.length * Math.random() | 0]
 
-      let headphones = new function() {
+      function headphones() {
         if(randomHelmet == '2' || randomHelmet == '5' || randomHelmet == '6') {
           return 'blocked by headgear'
         } else {
