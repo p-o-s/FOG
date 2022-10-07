@@ -50,6 +50,7 @@ app.get('/tarkov', async (req,res) =>{
 
     return res.send(weapons.toString())
   }catch(e){
+    console.error(e)
     console.error(e.code)
     console.error(e.response?.data)
     return res.send(`${e.code} from tarkov.dev`)
