@@ -115,7 +115,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // roulette
     if(interaction.data.name == 'roulette'){
 
-      res.send({
+      let reply = await res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: '',
@@ -130,6 +130,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           ]
         }
       });
+      console.log(reply);
 
       let query = { 
         "operationName": "",
