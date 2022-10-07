@@ -38,15 +38,15 @@ const tarkovDev = axios.create({
 app.get('/tarkov', async (req,res) =>{
 
   let query = { 
-    "operationName": "",
-    "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { name shortName inspectImageLink }}}} }`,
-    "variables": {}
+    "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName inspectImageLink }}}} }`,
   }
 
   try
   {
     let tarkovDevResponse = await tarkovDev.post('/graphql', query)
-    return res.send(tarkovDevResponse.data)
+    let weapons = tarkovDevResponse.data.items;
+
+    return res.send(JSON.stringify(weapons))
   }catch(e){
     console.error(e.code)
     console.error(e.response?.data)
