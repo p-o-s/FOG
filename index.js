@@ -79,8 +79,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   const interaction = req.body;
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
-    
-
     // Random map generator
     if(interaction.data.name == 'map'){
 
@@ -101,21 +99,16 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         },
       });
     }
+    // Random game generator
+    if(interaction.data.name == 'game'){}
+    // Random game generator
+    if(interaction.data.name == 'scavorpmc'){}
     
-    // Random game generator
-    if(interaction.data.name == 'game'){
-
-    }
-
-    // Random game generator
-    if(interaction.data.name == 'scavorpmc'){
-
-    }
-
+    
     // roulette
     if(interaction.data.name == 'roulette'){
 
-      await res.send({
+    res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: '',
@@ -143,10 +136,8 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       const lvlArr = ['1','2','3','4','5','6'];
       const helmetArr = ['naked', 'cosmetic'];
       const armorArr = ['naked'];
-      
       let availableHelmets = helmetArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${helmetArg}]`, 'g')) }))
       let availableArmor = armorArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${armorArg}]`, 'g')) }))
-
       let randomHelmet = availableHelmets[availableHelmets.length * Math.random() | 0]
       let randomArmor = availableArmor[availableArmor.length * Math.random() | 0]
 
@@ -159,7 +150,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         }
       }
 
-      
       try
       {
         // send graphQl query to tarkov.dev
@@ -168,9 +158,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     
         // exclude items without defaultPreset
         let itemsFiltered = items.filter((item) => { return item.properties.defaultPreset != null })
-        
-        let randomItem = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset
-        
+        let randomItem = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset 
 
         let rouletteEmbed = {
           data: {
@@ -211,18 +199,17 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
             ]
           }
         }
-      return await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`, rouletteEmbed)
-      }catch(e){
-        console.error(e)
-        console.error(e.code)
-        console.error(e.response?.data)
-        return res.send(`${e.code} from tarkov.dev`)
-      }
-    }
-
+        
+        await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`, rouletteEmbed)
+        return
+      } catch(e){
+          console.error(e)
+          console.error(e.code)
+          console.error(e.response?.data)
+          return res.send(`${e.code} from tarkov.dev`)
+        }
   }
-
-});
+}});
 
 
 // register interaction commands "/?"
