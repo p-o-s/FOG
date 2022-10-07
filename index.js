@@ -15,7 +15,7 @@ const app = express();
 
 const discord_api = axios.create({
   baseURL: 'https://discord.com/api/',
-  timeout: 3000,
+  timeout: 5000,
   headers: {
 	'Access-Control-Allow-Origin': '*',
 	'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
@@ -29,7 +29,7 @@ const discord_api = axios.create({
 // TARKOV DEV
 const tarkovDev = axios.create({
   baseURL: 'https://api.tarkov.dev',
-  timeout: 3000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -115,12 +115,23 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // roulette
     if(interaction.data.name == 'roulette'){
       console.log(interaction.data)
-      
+
       let query = { 
         "operationName": "",
         "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
         "variables": {}
       }
+
+      let helmetArg = interaction.data.options[0];
+      let armorArg = interaction.data.options[1];
+
+      const lvlArr = [1,2,3,4,5,6];
+      const helmetArr = ['naked', 'cosmetic'];
+      const armorArr = ['naked'];
+      const headphones = ['yes', 'no']; // wenn class 2/5/6 dann keine headphones
+      
+      console.log("filtered helmet arr: ", helmetArr.push(helmetArg.filter(`\\[${helmetArg}]\g`, ''))  )
+
     
       try
       {
