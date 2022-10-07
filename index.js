@@ -28,12 +28,10 @@ const discord_api = axios.create({
 
 // TARKOV DEV
 const tarkovDev = axios.create({
-  baseURL: 'https://api.tarkov.dev/graphql',
+  baseURL: 'https://api.tarkov.dev',
   timeout: 3000,
-  method: 'post',
   headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+    'Content-Type': 'application/json'
   }
 })
 
@@ -41,13 +39,13 @@ app.get('/tarkov', async (req,res) =>{
 
   let query = { 
     "operationName": "",
-    "query": `{items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { name shortName inspectImageLink }}}}}`,
+    "query": `query items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { name shortName inspectImageLink }}}}`,
     "variables": {}
   }
 
   try
   {
-    let tarkovDevResponse = await tarkovDev.post(query)
+    let tarkovDevResponse = await tarkovDev.post('/graphql', query)
     return res.send(tarkovDevResponse.data)
   }catch(e){
     console.error(e.code)
