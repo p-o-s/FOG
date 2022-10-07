@@ -76,7 +76,7 @@ function rollArr(arr) {
 
 // receive interactions
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
-  console.log(req.body);
+  console.log("TESTTESTSTEWFESDFESFESFESFESFESEF", req.body);
   const interaction = req.body;
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
