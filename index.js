@@ -130,7 +130,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         // exclude items without defaultPreset
         let itemsFiltered = items.filter((item) => { return item.properties.defaultPreset != null })
         
-        let randomItemName = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset.shortName.replace(/\sStandard|\sDefault/g, '')
+        let randomItem = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset
         
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -145,7 +145,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                 "fields": [
                   {
                     "name": `Weapon`,
-                    "value": `${randomItemName}`,
+                    "value": `${randomItem.shortName.replace(/\sStandard|\sDefault/g, '')}`,
                     "inline": true
                   },
                   {
@@ -163,7 +163,12 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                     "value": `\${}`,
                     "inline": true
                   }
-                ]
+                ],
+                "image": {
+                  "url": `${randomItem.inspectImageLink}`,
+                  "height": 0,
+                  "width": 0
+                }
               }
             ]
           },
