@@ -107,7 +107,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     
     // roulette
     if(interaction.data.name == 'roulette'){
-
+/*
     res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
@@ -123,7 +123,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           ]
         }
       });
-
+*/
       let query = { 
         "operationName": "",
         "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
@@ -161,6 +161,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         let randomItem = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset 
 
         let rouletteEmbed = {
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             embeds: [
               {
@@ -200,8 +201,8 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           }
         }
         
-        await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`, rouletteEmbed)
-        return
+        return await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, rouletteEmbed)
+        
       } catch(e){
           console.error(e)
           console.error(e.code)
