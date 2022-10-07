@@ -18,7 +18,7 @@ const discord_api = axios.create({
   timeout: 5000,
   headers: {
 	'Access-Control-Allow-Origin': '*',
-	'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+	'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH',
 	'Access-Control-Allow-Headers': 'Authorization',
 	'Authorization': `Bot ${TOKEN}`
   }
@@ -115,30 +115,21 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // roulette
     if(interaction.data.name == 'roulette'){
 
-      try
-      {
-        let waitEmbed = {
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: '',
-            embeds: [
-              {
-                "type": "rich",
-                "title": `Your Roll`,
-                "description": `... needs some time. Calculating... `,
-                "color": 0x00FFFF,
-                "fields": [],
-              }
-            ]
-          }
+      await res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: '',
+          embeds: [
+            {
+              "type": "rich",
+              "title": `Your Roll`,
+              "description": `... needs some time. Calculating... `,
+              "color": 0x00FFFF,
+              "fields": [],
+            }
+          ]
         }
-        return await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, waitEmbed)
-      }catch(e){
-        console.error(e)
-        console.error(e.code)
-        console.error(e.response?.data)
-        return res.send(`${e.code} from tarkov.dev`)
-      }
+      });
 
       let query = { 
         "operationName": "",
