@@ -45,11 +45,8 @@ app.get('/tarkov', async (req,res) =>{
 
   try
   {
-    const tarkovDevResponse = await tarkovDev.post('/graphql', query)
-    let weapons = JSON.parse(tarkovDevResponse.data).data.items
-    res.send("devResponse: ", tarkovDevResponse)
-    res.send("devResponse.data: ", tarkovDevResponse.data)
-    res.send("weapons: ", weapons)
+    let tarkovDevResponse = await tarkovDev.post('/graphql', query)
+    let weapons = JSON.parse(`${tarkovDevResponse.data}`).data.items
 
     return res.send(weapons.toString())
   }catch(e){
