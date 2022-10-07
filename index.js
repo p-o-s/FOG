@@ -117,7 +117,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
       let query = { 
         "operationName": "",
-        "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName inspectImageLink }}}} }`,
+        "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
         "variables": {}
       }
     
@@ -165,7 +165,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                   }
                 ],
                 "image": {
-                  "url": `${randomItem.inspectImageLink}`,
+                  "url": `${randomItem.gridImageLink}`,
                   "height": 0,
                   "width": 0
                 }
