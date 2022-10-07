@@ -117,6 +117,22 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     if(interaction.data.name == 'roulette'){
       console.log(interaction.data)
 
+      res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: '',
+          embeds: [
+            {
+              "type": "rich",
+              "title": `Your Roll`,
+              "description": `... needs some time. Calculating... `,
+              "color": 0x00FFFF,
+              "fields": [],
+            }
+          ]
+        }
+      });
+
       let query = { 
         "operationName": "",
         "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
@@ -156,9 +172,9 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         let itemsFiltered = items.filter((item) => { return item.properties.defaultPreset != null })
         
         let randomItem = itemsFiltered[itemsFiltered.length * Math.random() | 0].properties.defaultPreset
-        
+        // UPDATE_MESSAGE
         return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          type: InteractionResponseType.UPDATE_MESSAGE,
           data: {
             content: '',
             embeds: [
