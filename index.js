@@ -38,7 +38,9 @@ const tarkovDev = axios.create({
 app.get('/tarkov', async (req,res) =>{
 
   let query = { 
+    "operationName": "",
     "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName inspectImageLink }}}} }`,
+    "variables": {}
   }
 
   try
