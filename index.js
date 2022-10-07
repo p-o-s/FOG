@@ -113,7 +113,8 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
         "variables": {}
       }
-
+      console.log(interaction.data.options);
+      
       let helmetArg = interaction.data.options[0];
       let armorArg = interaction.data.options[1];
 
@@ -122,6 +123,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       const armorArr = ['naked'];
       let availableHelmets = helmetArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${helmetArg}]`, 'g')) }))
       let availableArmor = armorArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${armorArg}]`, 'g')) }))
+      
       let randomHelmet = availableHelmets[availableHelmets.length * Math.random() | 0]
       let randomArmor = availableArmor[availableArmor.length * Math.random() | 0]
 
