@@ -114,7 +114,8 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     // roulette
     if(interaction.data.name == 'roulette'){
-
+      console.log(interaction.data)
+      
       let query = { 
         "operationName": "",
         "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
