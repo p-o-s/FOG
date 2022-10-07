@@ -45,8 +45,13 @@ app.get('/tarkov', async (req,res) =>{
 
   try
   {
+    // send graphQl query to tarkov.dev
     let tarkovDevResponse = await tarkovDev.post('/graphql', query)
     let items = tarkovDevResponse.data.data.items
+
+    // exclude items without defaultPreset
+    items.filter((item) => { return item.properties.defaultPreset != null })
+    
     let randomItemName = items[items.length * Math.random() | 0].properties.defaultPreset.shortName.replace(/\sStandard|\sDefault/g, '')
 
     return res.send(randomItemName)
