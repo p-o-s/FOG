@@ -98,13 +98,16 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: `Have fun on **${map} ${time[time.length * Math.random() | 0]}**!`,
+          tts: true
         },
       });
     }
     // Random game generator
     if(interaction.data.name == 'game'){}
     // Random game generator
-    if(interaction.data.name == 'scavorpmc'){}
+    if(interaction.data.name == 'scavorpmc') {
+      
+    }
     
     
     // roulette
