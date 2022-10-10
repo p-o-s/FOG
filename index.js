@@ -201,12 +201,15 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'test'){
-      console.log('RES', res)
 
-      res.send({
-        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        token: interaction.token
-      });
+      try{
+        let res = await discord_api.post(`/interactions/${interaction.id}/${interaction.token}/callback`,{
+          type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
+        })
+        console.log('discord_api.post; res.data: ', res.data)
+      }catch(e){
+        console.log(e)
+      }
 
       await new Promise(r => setTimeout(r, 5000));
 
