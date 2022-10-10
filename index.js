@@ -79,6 +79,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   const interaction = req.body;
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
+
     // Random map generator
     if(interaction.data.name == 'map'){
 
@@ -98,19 +99,17 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: `Have fun on **${map} ${time[time.length * Math.random() | 0]}**!`,
-          
         },
       });
     }
+
     // Random game generator
     if(interaction.data.name == 'game'){}
+
     // Random game generator
-    if(interaction.data.name == 'scavorpmc') {
-      
-    }
+    if(interaction.data.name == 'scavorpmc') {}
     
-    
-    // roulette
+    // Roulette
     if(interaction.data.name == 'roulette'){
 
       let query = { 
@@ -119,19 +118,17 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         "variables": {}
       }
       
-      
-      let helmetArg = interaction.data.options[0].value;
-      let armorArg = interaction.data.options[1].value;
+      let helmetArg = interaction.data.options[0].value,
+          armorArg = interaction.data.options[1].value;
 
-      const lvlArr = ['1','2','3','4','5','6'];
-      const helmetArr = ['naked', 'cosmetic'];
-      const armorArr = ['naked'];
-      let availableHelmets = helmetArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${helmetArg}]`, 'g')) }))
-      let availableArmor = armorArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${armorArg}]`, 'g')) }))
-      console.log(availableHelmets);
-      console.log(availableArmor);
-      let randomHelmet = availableHelmets[availableHelmets.length * Math.random() | 0]
-      let randomArmor = availableArmor[availableArmor.length * Math.random() | 0]
+      const lvlArr = ['1','2','3','4','5','6'], 
+            helmetArr = ['cosmetic'], 
+            armorArr = ['naked'];
+      
+      let availableHelmets = helmetArr.concat(lvlArr.filter((lvl) => { return lvl.match(new RegExp(`\[${helmetArg}]`, 'g')) })),
+          availableArmor = armorArr.concat(lvlArr.slice(1, 6).filter((lvl) => { return lvl.match(new RegExp(`\[${armorArg}]`, 'g')) })),
+          randomHelmet = availableHelmets[availableHelmets.length * Math.random() | 0],
+          randomArmor = availableArmor[availableArmor.length * Math.random() | 0];
 
       function headphones() {
         if(randomHelmet == '2' || randomHelmet == '5' || randomHelmet == '6') {
@@ -201,13 +198,36 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           console.error(e.response?.data)
           return res.send(`${e.code} from tarkov.dev`)
         }
-  }
+    }
+
+    if(interaction.data.name == 'test'){
+      //
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        token: interaction.token
+      });
+
+      await new Promise(r => setTimeout(r, 5000));
+
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        token: interaction.token,
+        data: {
+          content: `waited.. worked..`,
+        },
+      });
+    }
+
 }});
 
 
 // register interaction commands "/?"
 app.get('/register_commands', async (req,res) =>{
   let slash_commands = [
+    {
+      'name': 'test',
+      'description': 'just testing..'
+    },
     {
       'name': 'map',
       'description': 'Random map generator.',
