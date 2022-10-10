@@ -206,13 +206,24 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         let res = await discord_api.post(`/interactions/${interaction.id}/${interaction.token}/callback`,{
           type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
         })
-        console.log('discord_api.post; res.data: ', res.data)
+        console.log('discord_api.POST; res.data: ', res.data)
       }catch(e){
         console.log(e)
       }
       
 
+
       await new Promise(r => setTimeout(r, 5000));
+
+      try{
+        let res = await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`,{
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          content: 'yup'
+        })
+        console.log('discord_api.PATCH; res.data: ', res.data)
+      }catch(e){
+        console.log(e)
+      }
 
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
