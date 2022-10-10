@@ -13,9 +13,10 @@ const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = requir
 
 const app = express();
 
+// DISCORD API
 const discord_api = axios.create({
   baseURL: 'https://discord.com/api/',
-  timeout: 5000,
+  timeout: 3000,
   headers: {
 	'Access-Control-Allow-Origin': '*',
 	'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH',
@@ -24,12 +25,10 @@ const discord_api = axios.create({
   }
 });
 
-
-
-// TARKOV DEV
+// TARKOV DEV API
 const tarkovDev = axios.create({
   baseURL: 'https://api.tarkov.dev',
-  timeout: 5000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json'
   }
