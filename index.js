@@ -161,41 +161,41 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
         let rouletteEmbed = {
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            embeds: [
-              {
-                "type": "rich",
-                "title": `Your Roll`,
-                "description": `use it or get recked!`,
-                "color": 0x00FFFF,
-                "fields": [
-                  {
-                    "name": `Weapon`,
-                    "value": `${randomItem.shortName.replace(/\sStandard|\sDefault/g, '')}`,
-                    "inline": true
-                  },
-                  {
-                    "name": `Armor`,
-                    "value": `Lvl: ${randomArmor}`,
-                    "inline": true
-                  },
-                  {
-                    "name": `Helmet`,
-                    "value": `Lvl: ${randomHelmet}`,
-                    "inline": true
-                  },
-                  {
-                    "name": `Headphones`,
-                    "value": `${headphones()}`,
-                    "inline": true
-                  }
-                ],
-                "image": {
-                  "url": `${randomItem.gridImageLink}`,
-                  "height": 0,
-                  "width": 0
+          embeds: [
+            {
+              "type": "rich",
+              "title": `Your Roll`,
+              "description": `use it or get recked!`,
+              "color": 0x00FFFF,
+              "fields": [
+                {
+                  "name": `Weapon`,
+                  "value": `${randomItem.shortName.replace(/\sStandard|\sDefault/g, '')}`,
+                  "inline": true
+                },
+                {
+                  "name": `Armor`,
+                  "value": `Lvl: ${randomArmor}`,
+                  "inline": true
+                },
+                {
+                  "name": `Helmet`,
+                  "value": `Lvl: ${randomHelmet}`,
+                  "inline": true
+                },
+                {
+                  "name": `Headphones`,
+                  "value": `${headphones()}`,
+                  "inline": true
                 }
+              ],
+              "image": {
+                "url": `${randomItem.gridImageLink}`,
+                "height": 0,
+                "width": 0
               }
-            ]
+            }
+          ]
         }
         
         try{
