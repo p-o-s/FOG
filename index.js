@@ -225,13 +225,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         console.log(e)
       }
 
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        token: interaction.token,
-        data: {
-          content: `waited.. worked..`,
-        },
-      });
+      return res.send({type: InteractionResponseType.PONG});
     }
 
 }});
