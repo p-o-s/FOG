@@ -161,7 +161,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
         let rouletteEmbed = {
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
             embeds: [
               {
                 "type": "rich",
@@ -197,7 +196,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                 }
               }
             ]
-          }
         }
         
         try{
