@@ -206,7 +206,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           console.log(e)
         }
 
-        return res.status(200);
+        return res.send({type: 1}); // pong
         
       } catch(e){
           console.error(e)
