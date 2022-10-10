@@ -112,6 +112,16 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // Roulette
     if(interaction.data.name == 'roulette'){
 
+      // send waiting status..
+      try{
+        let res = await discord_api.post(`/interactions/${interaction.id}/${interaction.token}/callback`,{
+          type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
+        })
+      }catch(e){
+        console.log(e)
+      }
+
+      // query tarkov.dev weapon info
       let query = { 
         "operationName": "",
         "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName gridImageLink }}}} }`,
@@ -190,7 +200,13 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           }
         }
         
-        return res.send(rouletteEmbed);
+        try{
+          let res = await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`, rouletteEmbed)
+        }catch(e){
+          console.log(e)
+        }
+
+        return res.status(200);
         
       } catch(e){
           console.error(e)
@@ -202,30 +218,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     if(interaction.data.name == 'test'){
 
-      try{
-        let res = await discord_api.post(`/interactions/${interaction.id}/${interaction.token}/callback`,{
-          type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
-        })
-        console.log('discord_api.POST; res.data: ', res.data)
-      }catch(e){
-        console.log(e)
-      }
-      
-
-
-      await new Promise(r => setTimeout(r, 5000));
-
-      try{
-        let res = await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`,{
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          content: 'yup'
-        })
-        console.log('discord_api.PATCH; res.data: ', res.data)
-      }catch(e){
-        console.log(e)
-      }
-
-      return res.send({type: InteractionResponseType.PONG});
     }
 
 }});
