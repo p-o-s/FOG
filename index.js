@@ -128,8 +128,9 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         "variables": {}
       }
       
-      let helmetArg = interaction.data.options[0].value || '1-4',
-          armorArg = interaction.data.options[1].value || '2-4';
+      
+      let helmetArg = (interaction.data.options) ? interaction.data.options[0].value : '1-4',
+          armorArg = (interaction.data.options) ? interaction.data.options[1].value : '2-4';
 
       const lvlArr = ['1','2','3','4','5','6'],  
             helmetArr = ['cosmetic'], 
