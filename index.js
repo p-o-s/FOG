@@ -210,6 +210,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       }catch(e){
         console.log(e)
       }
+      
 
       await new Promise(r => setTimeout(r, 5000));
 
