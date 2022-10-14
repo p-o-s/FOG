@@ -106,7 +106,15 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     if(interaction.data.name == 'game'){}
 
     // Random game generator
-    if(interaction.data.name == 'scavorpmc') {}
+    if(interaction.data.name == 'scavorpmc') {
+      const scavORpmc = ['SCAV', 'PMC'];
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `You're about to play as **${scavORpmc[scavORpmc.length * Math.random() | 0]}**!`,
+        },
+      });
+    }
     
     // Roulette
     if(interaction.data.name == 'roulette'){
