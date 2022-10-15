@@ -283,9 +283,10 @@ app.get('/roles', async(req,res) => {
   // GET
   try{
     let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`) // kingofthehill-id: 1030927052964106250
-    let membersKOTH = await discord_api.get(`/guilds/${GUILD_ID}/members?limit=100`).filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
+    let members = await discord_api.get(`/guilds/${GUILD_ID}/members?limit=100`)
+    let kothMembers = members.data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
     console.log(roles.data)
-    console.log(membersKOTH)
+    console.log(kothMembers)
     return res.send('OK')
   }catch(e){
     console.log(e)
