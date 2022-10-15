@@ -253,7 +253,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     return res.send({
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
-        content: 'Settings saved. <@219418959257141248>'
+        content: 'Settings saved.'
       }
     });
 
@@ -283,11 +283,11 @@ app.get('/roles', async(req,res) => {
   // GET
   try{
     let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`) // kingofthehill-id: 1030927052964106250
-    let members = await discord_api.get(`/guilds/${GUILD_ID}/members?limit=100`)
-    let kothMembers = members.data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
+    let members = await discord_api.get(`/guilds/${GUILD_ID}/members?limit=100`).data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
+    //let kothMembers = members.data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
     console.log(roles.data)
-    console.log(members.data)
-    console.log('koth members: ', kothMembers)
+    console.log('koth members: ', members)
+    //console.log('koth members: ', kothMembers)
     return res.send('OK')
   }catch(e){
     console.log(e)
