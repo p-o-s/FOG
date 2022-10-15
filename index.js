@@ -229,14 +229,19 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
           data: {
             custom_id: 'gameRollSettings',
             title: 'List of Games..',
-            components: [
-                {
-                  type: 4,
-                  label: `List of Games`,
-                  style: 	2,
-                  custom_id: 'games_input'
-                }
-             ]
+            components: [ 
+              {
+                "type": 1,
+                "components": [
+                      {
+                        type: 4,
+                        label: `List of Games`,
+                        style: 	2,
+                        custom_id: 'games_input'
+                      }
+                  ]
+              }
+          ]
           }
         })      
     }
