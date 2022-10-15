@@ -286,7 +286,8 @@ app.get('/roles', async(req,res) => {
     let members = await discord_api.get(`/guilds/${GUILD_ID}/members?limit=100`)
     let kothMembers = members.data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
     console.log(roles.data)
-    console.log(kothMembers)
+    console.log(members.data)
+    console.log('koth members: ', kothMembers)
     return res.send('OK')
   }catch(e){
     console.log(e)
