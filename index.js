@@ -283,7 +283,9 @@ app.get('/roles', async(req,res) => {
   // GET
   try{
     let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`)
-    console.log(roles)
+    let members = await discord_api.get(`/guilds/${GUILD_ID}/members`)
+    console.log(roles.data)
+    console.log(members.data)
     return res.send('OK')
   }catch(e){
     console.log(e)
