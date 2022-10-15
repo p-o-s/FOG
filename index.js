@@ -223,7 +223,27 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'test'){
-
+      try{
+        let res = await discord_api.post(`/interactions/${interaction.id}/${interaction.token}/callback`,{
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          content: '',
+          components: [
+                {
+                    type: 1,
+                    components: [
+                        {
+                          type: 2,
+                          label: `Don't click me pls!`,
+                          style: 1,
+                          custom_id: 'click_one'
+                      }
+                    ]
+                }
+            ]
+        })
+      }catch(e){
+        console.log(e)
+      }      
     }
 
 }});
