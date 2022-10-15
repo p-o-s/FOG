@@ -253,7 +253,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
 
     return res.send({
-      type: InteractionResponseType.UPDATE_MESSAGE,
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
         content: 'Settings saved.'
       }
