@@ -261,9 +261,9 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
 });
 
+/* TODO: create interaction response inside #kuschelecke & in a thread */
 
 app.get('/bulkdelete', async(req,res) => {
-
   try{
     let channelId = '580104185559777326';
     let channelMessages = await discord_api.get(`/channels/${channelId}/messages?limit=100`)
@@ -272,6 +272,19 @@ app.get('/bulkdelete', async(req,res) => {
     let deletedMsg = await discord_api.post(`/channels/${channelId}/messages/bulk-delete`, { messages: filteredMessages })
 
     return res.send('OK, bulk deleted')
+  }catch(e){
+    console.log(e)
+    return res.send('ERROR')
+  }
+})
+
+app.get('/roles', async(req,res) => {
+
+  // GET
+  try{
+    let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`)
+    console.log(roles)
+    return res.send('OK')
   }catch(e){
     console.log(e)
     return res.send('ERROR')
