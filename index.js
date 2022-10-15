@@ -77,6 +77,7 @@ function rollArr(arr) {
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   const interaction = req.body;
 
+  // filter for slash commands
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
 
     // Random map generator
@@ -229,22 +230,49 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
             content: '',
             components: [
               {
-                  type: 1,
-                  components: [
-                      {
-                        type: 2,
-                        label: `Don\'t click me pls!`,
-                        style: 1,
-                        custom_id: 'click_one'
-                    }
-                  ]
+                type: 1,
+                components: [
+                  {
+                    type: 4,
+                    label: `List of Games`,
+                    style: 	2,
+                    custom_id: 'games_input'
+                  },
+                  {
+                    type: 4,
+                    label: `test input`,
+                    style: 	1,
+                    custom_id: 'test_inp'
+                  }
+                ]
+              },
+              {
+                type: 1,
+                components: [
+                  {
+                    type: 2,
+                    label: `Don\'t click me pls!`,
+                    style: 1,
+                    custom_id: 'click_one'
+                  }
+                ]
               }
             ]
           }
         })      
     }
+  }
 
-}});
+  // filter for MESSAGE_COMPONENT interactions..
+  if(interaction.type === InteractionType.MESSAGE_COMPONENT) {
+
+    return res.send({
+      type: InteractionResponseType.PONG
+    });
+
+  }
+
+});
 
 
 // register interaction commands "/?"
