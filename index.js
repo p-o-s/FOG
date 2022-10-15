@@ -262,7 +262,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 });
 
 
-app.get('/bulkdelete', verifyKeyMiddleware(PUBLIC_KEY), async(req,res) => {
+app.get('/bulkdelete', async(req,res) => {
 
   let channelId = '580104185559777326';
   let channelMessages = await discord_api.get(`/channels/${channelId}/messages`)
