@@ -79,7 +79,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
   // filter for slash commands
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
-
+console.log("app command?!?!")
     // Random map generator
     if(interaction.data.name == 'map'){
 
