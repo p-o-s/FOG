@@ -250,18 +250,15 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   // filter for MODAL_SUBMIT's..
   if(interaction.type === 5) {
 
-    try{
-      let settingsSavedResponse = {
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+
+
+    return res.send({
+      type: InteractionResponseType.UPDATE_MESSAGE,
+      data: {
         content: 'Settings saved.'
       }
+    });
 
-    let res = await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, settingsSavedResponse)
-    }catch(e){
-    console.log(e)
-    }
-
-      return
   }
 
 });
