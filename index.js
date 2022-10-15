@@ -250,8 +250,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   // filter for MODAL_SUBMIT's..
   if(interaction.type === 5) {
 
-
-
     return res.send({
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
@@ -263,6 +261,14 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
 });
 
+
+app.get('/bulkdelete', verifyKeyMiddleware(PUBLIC_KEY), async(req,res) => {
+
+  let channelId = '580104185559777326';
+  let channelMessages = await discord_api.get(`/channels/${channelId}/messages`)
+  return res.send(channelMessages)
+
+})
 
 // register interaction commands "/?"
 app.get('/register_commands', async (req,res) =>{
