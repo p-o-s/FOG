@@ -223,8 +223,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'test'){
-      try{
-        let res = await discord_api.post(`/interactions/${interaction.id}/${interaction.token}/callback`,{
+        return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           content: 'a',
           components: [
@@ -240,10 +239,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                     ]
                 }
             ]
-        })
-      }catch(e){
-        console.log(e)
-      }      
+        })      
     }
 
 }});
