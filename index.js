@@ -272,12 +272,8 @@ app.get('/bulkdelete', async(req,res) => {
     let filteredMessages = channelMessages.filter(msg => msg.interaction)
 
     for (let msg of filteredMessages) {
-      try{
         let deletedMsg = await discord_api.delete(`/channels/${channelId}/messages/${msg.id}`)
-        return res.send(`DELETED: ${msg.id}`)
-      } catch(e) {
-        return res.send('ERROR deleting msg.')
-      }
+        res.send(`DELETED: ${msg.id}`)
     }
 
     return res.send('OK')
