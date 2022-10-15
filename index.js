@@ -262,11 +262,15 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 });
 
 
-app.get('/bulkdelete', verifyKeyMiddleware(PUBLIC_KEY), async(req,res) => {
-  console.log("jip");
-  let channelId = '580104185559777326';
-  let channelMessages = await discord_api.get(`/channels/${channelId}/messages`)
-  return res.send(channelMessages)
+app.get('/bulkdelete', async(req,res) => {
+
+  try{
+    let channelId = '580104185559777326';
+    let channelMessages = await discord_api.get(`/channels/${channelId}/messages`)
+    return res.send(channelMessages)
+  }catch(e){
+    console.log(e)
+  }
 
 })
 
