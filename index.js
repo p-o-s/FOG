@@ -251,10 +251,11 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   if(interaction.type === InteractionType.MODAL_SUBMIT) {
 
     return res.send({
-      type: InteractionResponseType.UPDATE_MESSAGE,
-      data: {
-        content: 'Settings saved.'
-      }
+      type: InteractionResponseType.PONG,
+      // type: InteractionResponseType.UPDATE_MESSAGE,
+      // data: {
+      //   content: 'Settings saved.'
+      // }
     });
 
   }
