@@ -243,6 +243,13 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
               }
           ]
           }
+        }).then(function (){
+          return res.send({
+            type: InteractionResponseType.UPDATE_MESSAGE,
+            data: {
+              content: 'Settings saved.'
+            }
+          });
         })      
     }
   }
