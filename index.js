@@ -289,7 +289,7 @@ app.get('/roles', async(req,res) => {
     console.log(members)
     console.log('koth members: ', kothMembers)
 
-    console.log(`king \of the hill: ${kothMembers[kothMembers.length * Math.random() || 0].user.username}`)
+    console.log(`king of the hill: ${kothMembers[kothMembers.length * Math.random() | 0].user.username}`)
 
     return res.send('OK')
   }catch(e){
