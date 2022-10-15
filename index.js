@@ -243,13 +243,6 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
               }
           ]
           }
-        }).then(function (){
-          return res.send({
-            type: InteractionResponseType.UPDATE_MESSAGE,
-            data: {
-              content: 'Settings saved.'
-            }
-          }); 
         })      
     }
   }
@@ -257,14 +250,18 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   // filter for MODAL_SUBMIT's..
   if(interaction.type === InteractionType.MODAL_SUBMIT) {
 
-    return res.send({
-      type: InteractionResponseType.PONG,
-      // type: InteractionResponseType.UPDATE_MESSAGE,
-      // data: {
-      //   content: 'Settings saved.'
-      // }
-    });
+    try{
+      let settingsSavedResponse = {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        content: 'Settings saved.'
+      }
 
+    let res = await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, settingsSavedResponse)
+    }catch(e){
+    console.log(e)
+    }
+
+      return
   }
 
 });
