@@ -249,7 +249,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
             data: {
               content: 'Settings saved.'
             }
-          });
+          }); 
         })      
     }
   }
