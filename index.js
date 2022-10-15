@@ -225,49 +225,31 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     if(interaction.data.name == 'test'){
         return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          type: InteractionResponseType.MODAL,
           data: {
-            content: '',
+            custom_id: 'gameRollSettings',
+            title: 'List of Games..',
             components: [
-              {
-                type: 1,
-                components: [
-                  {
-                    type: 4,
-                    label: `List of Games`,
-                    style: 	2,
-                    custom_id: 'games_input'
-                  },
-                  {
-                    type: 4,
-                    label: `test input`,
-                    style: 	1,
-                    custom_id: 'test_inp'
-                  }
-                ]
-              },
-              {
-                type: 1,
-                components: [
-                  {
-                    type: 2,
-                    label: `Don\'t click me pls!`,
-                    style: 1,
-                    custom_id: 'click_one'
-                  }
-                ]
-              }
-            ]
+                {
+                  type: 4,
+                  label: `List of Games`,
+                  style: 	2,
+                  custom_id: 'games_input'
+                }
+             ]
           }
         })      
     }
   }
 
-  // filter for MESSAGE_COMPONENT interactions..
-  if(interaction.type === InteractionType.MESSAGE_COMPONENT) {
+  // filter for MODAL_SUBMIT's..
+  if(interaction.type === InteractionType.MODAL_SUBMIT) {
 
     return res.send({
-      type: InteractionResponseType.PONG
+      type: CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: 'Settings saved.'
+      }
     });
 
   }
