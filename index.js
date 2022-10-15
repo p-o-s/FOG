@@ -225,7 +225,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
     if(interaction.data.name == 'test'){
         return res.send({
-          type: InteractionResponseType.MODAL,
+          type: 9, // Modal
           data: {
             custom_id: 'gameRollSettings',
             title: 'List of Games..',
@@ -246,7 +246,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   if(interaction.type === InteractionType.MODAL_SUBMIT) {
 
     return res.send({
-      type: CHANNEL_MESSAGE_WITH_SOURCE,
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
         content: 'Settings saved.'
       }
