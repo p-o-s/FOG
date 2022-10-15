@@ -249,7 +249,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
   // filter for MODAL_SUBMIT's..
   if(interaction.type === InteractionType.MODAL_SUBMIT) {
-
+console.log("jup-....-.-.-")
     try{
       let settingsSavedResponse = {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
