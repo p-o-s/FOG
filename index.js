@@ -79,7 +79,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
   // filter for slash commands
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
-console.log("app command?!?!")
+
     // Random map generator
     if(interaction.data.name == 'map'){
 
@@ -248,7 +248,7 @@ console.log("app command?!?!")
   }
 
   // filter for MODAL_SUBMIT's..
-  if(interaction.type === InteractionType.MODAL_SUBMIT) {
+  if(interaction.type === 5) {
 console.log("jup-....-.-.-")
     try{
       let settingsSavedResponse = {
