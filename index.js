@@ -256,7 +256,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         content: 'Settings saved.'
       }
 
-    let res = await discord_api.post(`/webhooks/${APPLICATION_ID}/${interaction.token}`, settingsSavedResponse)
+    let res = await discord_api.patch(`/webhooks/${APPLICATION_ID}/${interaction.token}/messages/@original`, settingsSavedResponse)
     }catch(e){
     console.log(e)
     }
