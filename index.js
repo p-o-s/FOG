@@ -225,20 +225,22 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     if(interaction.data.name == 'test'){
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          content: 'a',
-          components: [
-                {
-                    type: 1,
-                    components: [
-                        {
-                          type: 2,
-                          label: `Don\'t click me pls!`,
-                          style: 1,
-                          custom_id: 'click_one'
-                      }
-                    ]
-                }
+          data: {
+            content: '',
+            components: [
+              {
+                  type: 1,
+                  components: [
+                      {
+                        type: 2,
+                        label: `Don\'t click me pls!`,
+                        style: 1,
+                        custom_id: 'click_one'
+                    }
+                  ]
+              }
             ]
+          }
         })      
     }
 
