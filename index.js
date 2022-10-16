@@ -288,6 +288,7 @@ app.get('/roles', async(req,res) => {
     //console.log(roles.data)
     //console.log(members)
     console.log('koth members: ', kothMembers)
+    console.log(new Date().toTimeString())
 
     return res.send(`king of the hill: ${kothMembers[kothMembers.length * Math.random() | 0].user.username}`)
   }catch(e){
