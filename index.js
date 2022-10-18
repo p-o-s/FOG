@@ -270,7 +270,7 @@ app.get('/bulkdelete', async(req,res) => {
     let filteredMessages = channelMessages.data.filter(msg => msg.interaction).map(msg => msg.id)
 
     let deletedMsg = await discord_api.post(`/channels/${KUSCHELECKE}/messages/bulk-delete`, { messages: filteredMessages })
-
+    
     return res.send('OK, bulk deleted')
   }catch(e){
     console.log(e)
@@ -279,7 +279,7 @@ app.get('/bulkdelete', async(req,res) => {
 })
 
 app.get('/roles', async(req,res) => {
-
+  
   // GET
   try{
     let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`) // kingofthehill-role-id: 1030927052964106250
@@ -290,16 +290,17 @@ app.get('/roles', async(req,res) => {
     console.log('koth members: ', kothMembers)
     
     // delete old koth message
-    let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
-    let filteredMessages = channelMessages.data.filter(msg => msg.author.id === '922139349603209267' && !msg.interaction)
     // father of god id 922139349603209267
-    console.log(channelMessages.data);
+    let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
+    let filteredMessage = channelMessages.data.filter(msg => msg.author.id === '922139349603209267' && !msg.interaction && msg.content.includes('KING'))
+    
+    let deletedMsg = await discord_api.delete(`/channels/${KUSCHELECKE}/messages/${filteredMessage}`, { messages: filteredMessages })
     
     // send new koth message
     // POST  /channels/{channel.id}/messages
-    // let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {
-    let kothAnnouncement = await discord_api.post(`/channels/1030827055291580486/messages`, {
-      content: '```ansi\n \u001b[1;40;31mKING\u3000\u001b[1;40;36mOF\u3000THE\u3000\u001b[1;40;31mHILL\n```' + `\n <@219418959257141248>`
+    let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {
+      content: '```ansi\n \u001b[1;40;31mKING\u3000\u001b[1;40;36mOF\u3000THE\u3000\u001b[1;40;31mHILL\n```' 
+      + `\n <@${kothMembers[kothMembers.length * Math.random() | 0].user.id}>`
     })
     
     return res.send(`king of the hill: ${kothMembers[kothMembers.length * Math.random() | 0].user.username}`)
