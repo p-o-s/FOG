@@ -293,13 +293,9 @@ app.get('/roles', async(req,res) => {
     // father of god id 922139349603209267
     let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
     let filteredMessage = channelMessages.data.filter(msg => msg.author.id === '922139349603209267' && !msg.interaction && msg.content.includes('KING'))
-    
-    
-    console.log(filteredMessage)
 
-
-    if(filteredMessage) {
-      let deletedMsg = await discord_api.delete(`/channels/${KUSCHELECKE}/messages/${filteredMessage}`)
+    if(filteredMessage.length) {
+      let deletedMsg = await discord_api.delete(`/channels/${KUSCHELECKE}/messages/${filteredMessage[0]}`)
     }
     
     // send new koth message
