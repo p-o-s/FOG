@@ -291,11 +291,12 @@ app.get('/roles', async(req,res) => {
 
     // delete old koth message
     let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
-    console.log(channelMessages.data);
-
+    
     // send new koth message
     // POST  /channels/{channel.id}/messages
-
+    let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {content: 'test'})
+    
+    console.log(channelMessages.data);
     return res.send(`king of the hill: ${kothMembers[kothMembers.length * Math.random() | 0].user.username}`)
   }catch(e){
     console.log(e)
