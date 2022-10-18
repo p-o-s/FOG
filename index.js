@@ -288,13 +288,13 @@ app.get('/roles', async(req,res) => {
     //console.log(roles.data)
     //console.log(members)
     console.log('koth members: ', kothMembers)
-    console.log(channelMessages.data);
-
+    
     // delete old koth message
     let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
     let filteredMessages = channelMessages.data.filter(msg => msg.author.id === '922139349603209267' && !msg.interaction)
     // father of god id 922139349603209267
-
+    console.log(channelMessages.data);
+    
     // send new koth message
     // POST  /channels/{channel.id}/messages
     let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {content: `\u200atest`})
