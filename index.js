@@ -287,13 +287,17 @@ app.get('/roles', async(req,res) => {
     let kothMembers = members.data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
     //console.log(roles.data)
     //console.log(members)
-    console.log('koth members: ', kothMembers)
+    //console.log('koth members: ', kothMembers)
     
     // delete old koth message
     // father of god id 922139349603209267
     let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
     let filteredMessage = channelMessages.data.filter(msg => msg.author.id === '922139349603209267' && !msg.interaction && msg.content.includes('KING'))
     
+    
+    console.log(filteredMessage)
+
+
     if(filteredMessage) {
       let deletedMsg = await discord_api.delete(`/channels/${KUSCHELECKE}/messages/${filteredMessage}`)
     }
