@@ -5,6 +5,7 @@ const APPLICATION_ID = process.env.APPLICATION_ID
 const TOKEN = process.env.TOKEN 
 const PUBLIC_KEY = process.env.PUBLIC_KEY || 'not set'
 const GUILD_ID = process.env.GUILD_ID 
+const KUSCHELECKE = '580104185559777326'
 
 // axios / express / discord interactions
 const axios = require('axios')
@@ -265,11 +266,10 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
 app.get('/bulkdelete', async(req,res) => {
   try{
-    let channelId = '580104185559777326';
-    let channelMessages = await discord_api.get(`/channels/${channelId}/messages?limit=100`)
+    let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
     let filteredMessages = channelMessages.data.filter(msg => msg.interaction).map(msg => msg.id)
 
-    let deletedMsg = await discord_api.post(`/channels/${channelId}/messages/bulk-delete`, { messages: filteredMessages })
+    let deletedMsg = await discord_api.post(`/channels/${KUSCHELECKE}/messages/bulk-delete`, { messages: filteredMessages })
 
     return res.send('OK, bulk deleted')
   }catch(e){
@@ -282,13 +282,19 @@ app.get('/roles', async(req,res) => {
 
   // GET
   try{
-    let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`) // kingofthehill-id: 1030927052964106250
+    let roles = await discord_api.get(`/guilds/${GUILD_ID}/roles`) // kingofthehill-role-id: 1030927052964106250
     let members = await discord_api.get(`/guilds/${GUILD_ID}/members?limit=100`)
     let kothMembers = members.data.filter(member => member.roles.length && member.roles.includes('1030927052964106250'))
     //console.log(roles.data)
     //console.log(members)
     console.log('koth members: ', kothMembers)
-    console.log(new Date().toTimeString())
+
+    // delete old koth message
+    let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
+    console.log(channelMessages.data);
+
+    // send new koth message
+    // POST  /channels/{channel.id}/messages
 
     return res.send(`king of the hill: ${kothMembers[kothMembers.length * Math.random() | 0].user.username}`)
   }catch(e){
