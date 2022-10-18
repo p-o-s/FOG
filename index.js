@@ -299,7 +299,7 @@ app.get('/roles', async(req,res) => {
     // POST  /channels/{channel.id}/messages
     // let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {
     let kothAnnouncement = await discord_api.post(`/channels/1030827055291580486/messages`, {
-      content: '```ansi \u001b[1;40;32mtest ```' + `\v <@219418959257141248>`
+      content: '```ansi\n \u001b[1;40;32mtest \n```' + `\v <@219418959257141248>`
     })
     
     return res.send(`king of the hill: ${kothMembers[kothMembers.length * Math.random() | 0].user.username}`)
