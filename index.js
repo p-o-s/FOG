@@ -294,10 +294,9 @@ app.get('/roles', async(req,res) => {
     let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
     let filteredMessage = channelMessages.data.filter(msg => msg.author.id === '922139349603209267' && !msg.interaction && msg.content.includes('KING'))
     
-    let deletedMsg = await discord_api.delete(`/channels/${KUSCHELECKE}/messages/${filteredMessage}`, { messages: filteredMessages })
+    let deletedMsg = await discord_api.delete(`/channels/${KUSCHELECKE}/messages/${filteredMessage}`)
     
     // send new koth message
-    // POST  /channels/{channel.id}/messages
     let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {
       content: '```ansi\n \u001b[1;40;31mKING\u3000\u001b[1;40;36mOF\u3000THE\u3000\u001b[1;40;31mHILL\n```' 
       + `\n <@${kothMembers[kothMembers.length * Math.random() | 0].user.id}>`
