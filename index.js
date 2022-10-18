@@ -297,7 +297,8 @@ app.get('/roles', async(req,res) => {
     
     // send new koth message
     // POST  /channels/{channel.id}/messages
-    let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {
+    // let kothAnnouncement = await discord_api.post(`/channels/${KUSCHELECKE}/messages`, {
+    let kothAnnouncement = await discord_api.post(`/channels/1030827055291580486/messages`, {
       content: `\`\`\`\`ansi[2;31mKING[0m\u3000[2;36mOF[0m\u3000[2;36mTHE[0m\u3000[2;31mHILL[0m\`\`\`\n@<>`
     })
     
