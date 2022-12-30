@@ -111,7 +111,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     	return res.send({
 	    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 	    data: {
-	      content: `Sir, the game of my choice is **${game}, Sir!`
+	      content: `Sir, the game of my choice is **${game}**, Sir!`
 	    },
 	});
     }
