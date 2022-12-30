@@ -65,8 +65,8 @@ app.get('/tarkov', async (req,res) =>{
 
 // MAIN
 const settings = {
-  'maps': ['Labs', 'Customs', 'Shoreline', 'Factory', 'Lighthouse', 'Interchange', 'Reserve', 'Woods'],
-  'games': ['tarkov', 'DAYZ', 'hunt:showdown', 'battlebit']
+  'maps': ['Labs', 'Customs', 'Shoreline', 'Factory', 'Lighthouse', 'Interchange', 'Reserve', 'Woods', 'Streets'],
+  'games': ['tarkov', 'DAYZ', 'hunt:showdown', 'battlebit', 'Dark and Darker']
 }
 
 // utility
@@ -105,9 +105,18 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     // Random game generator
-    if(interaction.data.name == 'game'){}
+    if(interaction.data.name == 'game'){
+	let game = rollArr(settings.games);
+	    
+    	return res.send({
+	    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+	    data: {
+	      content: `Sir, the game of my choice is **${game}, Sir!`
+	    },
+	});
+    }
 
-    // Random game generator
+    // SCAV or PMC generator
     if(interaction.data.name == 'scavorpmc') {
       const scavORpmc = ['SCAV', 'PMC'];
       return res.send({
