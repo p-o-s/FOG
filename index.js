@@ -240,7 +240,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       const challengeChannelId = '1032017111767330816';
 
       try{
-        let res = await discord_api.get(`/channels/${challengeChannelId.id}/messages`)
+        let res = await discord_api.get(`/channels/${challengeChannelId}/messages`)
       }catch(e){
         console.log(e)
       }
