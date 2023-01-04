@@ -245,15 +245,15 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         console.log(e)
       }
 
+      console.log(test)
       console.log(res);
 
-      /*return res.send({
+      return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: ``
+          content: `test`
         }
       })
-      */
     }
 
 
