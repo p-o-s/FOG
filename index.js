@@ -241,12 +241,10 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
       try{
         let res = await discord_api.get(`/channels/${challengeChannelId}/messages`)
+        console.log(res);
       }catch(e){
         console.log(e)
       }
-
-      console.log('test')
-      console.log(res);
 
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
