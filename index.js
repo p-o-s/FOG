@@ -11,6 +11,7 @@ const KUSCHELECKE = '580104185559777326'
 const axios = require('axios')
 const express = require('express');
 const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-interactions');
+const { connect } = require('http2')
 
 const app = express();
 
@@ -37,12 +38,13 @@ const tarkovDev = axios.create({
 
 app.get('/tarkov', async (req,res) =>{
 
+  // Tarkov-Roulette // tarkov.dev GraphQL Query CONTENT
   let query = { 
     "operationName": "",
     "query": `query { items(type: gun) { properties { __typename ... on ItemPropertiesWeapon { defaultPreset { shortName inspectImageLink }}}} }`,
     "variables": {}
   }
-
+  // Tarkov-Roulette // tarkov.dev GraphQL Query action
   try
   {
     // send graphQl query to tarkov.dev
@@ -233,6 +235,29 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         }
     }
 
+    // Tarkov Extreme Challenges
+    if(interaction.data.name == 'challenge'){
+      const challengeChannelId = '1032017111767330816';
+
+      try{
+        let res = await discord_api.get(`/channels/${challengeChannelId.id}/messages`)
+      }catch(e){
+        console.log(e)
+      }
+
+      console.log(res);
+
+      /*return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: ``
+        }
+      })
+      */
+    }
+
+
+    // TEST
     if(interaction.data.name == 'test'){
         return res.send({
           type: 9, // Modal
@@ -271,7 +296,10 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
 
 });
 
-/* TODO: create interaction response inside #kuschelecke & in a thread */
+/* TODO: 
+  - create interaction response inside #kuschelecke & in a thread/seperate channel, for backup reaons.
+  - tarkov extreme challenges
+*/
 
 app.get('/bulkdelete', async(req,res) => {
   try{
@@ -371,6 +399,11 @@ app.get('/register_commands', async (req,res) =>{
           'required': false
         }
       ] 
+    },
+    {
+      'name': 'challenge',
+      'description': 'Tarkov EXTREME Challenges. Ain\'t no fun',
+      'options': []
     }
   ]
   try
