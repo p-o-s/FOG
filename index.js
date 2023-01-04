@@ -238,18 +238,27 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     // Tarkov Extreme Challenges
     if(interaction.data.name == 'challenge'){
       const challengeChannelId = '1032017111767330816';
+      let challenges = [];
 
       try{
         let res = await discord_api.get(`/channels/${challengeChannelId}/messages`)
-        console.log(res);
+        res.data.forEach(msg => {
+          if(msg.content.includes(`\n`)){
+            msg.content.split(`\n`).forEach(challenge => challenges.push(challenge))
+          } else {
+            challenges.push(msg.content);
+          }
+        })
+        
       }catch(e){
         console.log(e)
       }
 
+      let rolledChallenge = rollArr(challenges);
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `test`
+          content: `${rolledChallenge}`
         }
       })
     }
