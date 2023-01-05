@@ -313,9 +313,15 @@ app.get('/bulkdelete', async(req,res) => {
     let channelMessages = await discord_api.get(`/channels/${KUSCHELECKE}/messages?limit=100`)
     let filteredMessages = channelMessages.data.filter(msg => msg.interaction).map(msg => msg.id)
 
-    let deletedMsg = await discord_api.post(`/channels/${KUSCHELECKE}/messages/bulk-delete`, { messages: filteredMessages })
-    
-    return res.send('OK, bulk deleted')
+    if(filteredMessages.length >= 2) {
+      let deletedMsg = await discord_api.post(`/channels/${KUSCHELECKE}/messages/bulk-delete`, { messages: filteredMessages })
+      return res.send('OK, bulk deleted')
+    } else if (filteredMessages.length == 1) {
+      return res.send('Only one message to delete. Ignoring.')
+    } else if (filteredMessages.length == 0) {
+      return res.send('No messages to delete.')
+    }
+     
   }catch(e){
     console.log(e)
     return res.send('ERROR')
